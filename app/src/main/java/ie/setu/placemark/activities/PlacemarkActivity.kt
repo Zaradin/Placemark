@@ -24,6 +24,9 @@ class PlacemarkActivity : AppCompatActivity() {
         binding = ActivityPlacemarkBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.topAppBar.title = title
+        setSupportActionBar(binding.topAppBar)
+
         app = application as MainApp
         i("Placemark Activity started...")
         binding.btnAdd.setOnClickListener() {
@@ -33,6 +36,7 @@ class PlacemarkActivity : AppCompatActivity() {
             if (placemark.title.isNotEmpty()) {
                 // Add the new Placemark to the array list
                 app!!.placemarksArrayList.add(PlacemarkModel(placemark.title, placemark.description))
+
                 for(i in app!!.placemarksArrayList.indices){
                     i("Placemark[$i]:${this.app!!.placemarksArrayList[i]}")
                 }
@@ -60,6 +64,21 @@ class PlacemarkActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_placemark, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cancel -> {
+                setResult(RESULT_CANCELED)
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

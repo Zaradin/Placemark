@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import ie.setu.placemark.R
 import ie.setu.placemark.databinding.ActivityPlacemarkListBinding
 import ie.setu.placemark.databinding.CardPlacemarkBinding
@@ -59,32 +60,8 @@ class PlacemarkListActivity : AppCompatActivity() {
                 (binding.recyclerView.adapter)?.
                 notifyItemRangeChanged(0,app.placemarksArrayList.size)
             }
+            if (it.resultCode == Activity.RESULT_CANCELED) {
+                Snackbar.make(binding.root, "Placemark CAnnceled", Snackbar.LENGTH_LONG).show()
+            }
         }
-}
-
-
-class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>) : RecyclerView.Adapter<PlacemarkAdapter.MainHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardPlacemarkBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
-
-        return MainHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val placemark = placemarks[holder.adapterPosition]
-        holder.bind(placemark)
-    }
-
-    override fun getItemCount(): Int = placemarks.size
-
-    class MainHolder(private val binding : CardPlacemarkBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(placemark: PlacemarkModel) {
-            binding.placemarkTitle.text = placemark.title
-            binding.placemarkDescription.text = placemark.description
-        }
-    }
 }
