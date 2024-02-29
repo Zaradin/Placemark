@@ -68,7 +68,7 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
                 notifyItemRangeChanged(0,app.placemarks.findAll().size)
             }
             if (it.resultCode == Activity.RESULT_CANCELED) {
-                Snackbar.make(binding.root, "Placemark Cancelled", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.root, R.string.placemark_cancelled, Snackbar.LENGTH_LONG).show()
             }
         }
 }
